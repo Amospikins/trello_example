@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Native Drag-and-Drop Kanban Clone</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="app">
+        <div class="topbar">
+            <div class="title-wrap">
+                <h1>Kanban Clone — Native Drag and Drop</h1>
+                <p>
+                    Built with plain HTML, CSS, and JavaScript. The board uses HTML5 drag events,
+                    <code>dataTransfer</code>, event delegation, <code>getBoundingClientRect()</code>
+                    for insertion math, and <code>insertBefore()</code> for reordering cards.
+                </p>
+            </div>
+
+            <div class="toolbar">
+                <button id="seedBtn" type="button">Reset Demo Data</button>
+                <button id="clearBtn" class="secondary" type="button">Clear Board</button>
+            </div>
+        </div>
+
+        <section class="meta">
+            <div class="meta-card">
+                <div class="label">Dragged Card</div>
+                <strong id="draggedCardLabel">None</strong>
+            </div>
+            <div class="meta-card">
+                <div class="label">Drop Target</div>
+                <strong id="dropTargetLabel">None</strong>
+            </div>
+            <div class="meta-card">
+                <div class="label">Technique</div>
+                <strong>Delegated board events + insertion-point math</strong>
+            </div>
+        </section>
+
+        <main class="board" id="board">
+            <section class="column" data-column-id="todo">
+                <div class="column-header">
+                    <div class="column-title">To Do <span class="count">0</span></div>
+                </div>
+                <div class="card-list" data-list-id="todo"></div>
+                <div class="add-card">
+                    <form data-create-form="todo">
+                        <input name="title" type="text" placeholder="Add a task title" required />
+                        <textarea name="description" placeholder="Add a short description"></textarea>
+                        <button type="submit">Add Card</button>
+                    </form>
+                </div>
+            </section>
+
+            <section class="column" data-column-id="doing">
+                <div class="column-header">
+                    <div class="column-title">Doing <span class="count">0</span></div>
+                </div>
+                <div class="card-list" data-list-id="doing"></div>
+                <div class="add-card">
+                    <form data-create-form="doing">
+                        <input name="title" type="text" placeholder="Add a task title" required />
+                        <textarea name="description" placeholder="Add a short description"></textarea>
+                        <button type="submit">Add Card</button>
+                    </form>
+                </div>
+            </section>
+
+            <section class="column" data-column-id="review">
+                <div class="column-header">
+                    <div class="column-title">Review <span class="count">0</span></div>
+                </div>
+                <div class="card-list" data-list-id="review"></div>
+                <div class="add-card">
+                    <form data-create-form="review">
+                        <input name="title" type="text" placeholder="Add a task title" required />
+                        <textarea name="description" placeholder="Add a short description"></textarea>
+                        <button type="submit">Add Card</button>
+                    </form>
+                </div>
+            </section>
+
+            <section class="column" data-column-id="done">
+                <div class="column-header">
+                    <div class="column-title">Done <span class="count">0</span></div>
+                </div>
+                <div class="card-list" data-list-id="done"></div>
+                <div class="add-card">
+                    <form data-create-form="done">
+                        <input name="title" type="text" placeholder="Add a task title" required />
+                        <textarea name="description" placeholder="Add a short description"></textarea>
+                        <button type="submit">Add Card</button>
+                    </form>
+                </div>
+            </section>
+        </main>
+
+        <section class="hint">
+            Drag cards between columns or reorder within the same column. The board listens once at the
+            board level for <code>dragstart</code>, <code>dragover</code>, <code>drop</code>, and
+            <code>dragend</code>. During <code>dragover</code>, it calculates the nearest insertion point
+            by comparing the mouse Y position against each card’s midpoint with
+            <code>getBoundingClientRect()</code>. On drop, it moves the dragged node with
+            <code>insertBefore()</code>.
+        </section>
+    </div>
+
+    <template id="cardTemplate">
+        <article class="card" draggable="true">
+            <h3 class="card-title"></h3>
+            <p class="card-body"></p>
+            <div class="card-footer">
+                <span class="tag">Task</span>
+                <span class="card-id"></span>
+            </div>
+        </article>
+    </template>
+
+</body>
+
+</html>
